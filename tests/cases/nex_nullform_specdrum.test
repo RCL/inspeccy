@@ -1,0 +1,52 @@
+# NullForm streams ~14 kHz WAV samples to port $DF via its CTC0 ISR.
+# With --audio-out, the DAC source should observe ~14000 writes per
+# second of run, at a derived rate around 14 kHz.
+
+description    = Specdrum capture: NullForm streams ~14 kHz samples to port $DF
+nex            = data/programs/NullForm_Party_Version.nex
+machine        = next50
+seconds        = 1.0
+audio_out      = nex_nullform_specdrum.wav
+
+expect_exit                = 0
+# Exact byte counts are deterministic for this fixed budget. If the demo's
+# CTC0 setup or our cycle counting drifts, these need re-pinning.
+# Dropped from 13927 -> 9792 when F_READ gained an SD-card-time cost model
+# (~5 KB ~= 1 wall-clock frame). NullForm reads ~48 KB at boot, which now
+# eats roughly the first 10 frames of the 1 s budget -- fewer remaining
+# frames means fewer CTC0-driven Specdrum writes.
+# Further drop 9792 -> 9091 when zxnDMA gained realistic halt-time cycle
+# accounting (4 CPU cycles per byte: 2 cyc to read from port A + 2 cyc to
+# write to port B; even fixed-port "memset" still does both); NullForm's
+# DMA-driven layer fills now cost real cycles.
+# Bump 9091 -> 9118 (+27) when DMA became interruptible: CTC0 now fires
+# DURING DMA chunks instead of being coalesced into a single late fire
+# at the end. The wav-player ISR runs more often per second, but most
+# of NullForm's wallclock is non-DMA main code so the delta is small.
+# Bump 9118 -> 9705 (+587) when F_READ became time-sliced: previously
+# F_READ was an atomic C++ memcpy + cycle charge, collapsing the in-ISR
+# time real hw spends running Z80 instructions (during which ~18 nested
+# CTC0 ISRs fire per F_READ). With time-slicing, those nested fires now
+# happen — each writes a wav sample to $DF, so the per-second sample
+# count climbs toward the rate real hw produces.
+#
+# Migrated specdrum.* -> audio.* when --specdrum-out was folded into the
+# unified --audio-out render. dac_writes is the same counter (9705 held).
+# derived_rate_hz semantics changed: the old figure was writes / total
+# wall time (diluted by the ~10 boot frames spent in F_READ, giving 9705);
+# the new one is (writes-1) / (last-first write span) — the true streaming
+# rate, which lands on CTC0's 15625 Hz.
+# Bump 9705 -> 9706 (+1) when the DD/FD prefix double-charge was fixed:
+# every IX/IY instruction had cost 4T too many (ld ix,nn 18 instead of 14,
+# bit n,(ix+d) 23 instead of 20), so the demo's index-register code now
+# runs slightly faster and one more sample fits in the 1 s budget.
+# Drop 9706 -> 9121 when the Next's 28 MHz read wait state was modelled
+# (one T per memory read at NR $07 = 3): the boot-time F_READ/decrunch code
+# and the main loop run ~20% slower, so fewer CTC0 ticks fall inside the
+# 1 s budget's streaming span.
+# Doubled 9121 -> 18242 (and the derived rate with it) when the Next's four
+# DACs were modelled: NullForm writes every sample to $DF (DACs A, D) and to
+# $B3 (B, C), and $B3 used to be ignored. Both writes are counted; the
+# stream is still 15625 samples a second.
+expect_dump_field_eq       = audio.dac_writes=18242
+expect_dump_field_eq       = audio.dac_derived_rate_hz=31251

@@ -1,0 +1,13 @@
+# Strict halt-classification rule: even a single NOP between DI and HALT
+# disqualifies the HaltedDeliberateStop classification. Locks the conservative
+# semantics so future loosening requires an explicit decision.
+
+description    = DI; NOP; HALT classifies as HaltedInterruptsDisabled (not deliberate)
+sna            = data/sna/halt_di_nop_halt.sna
+seconds        = 0.1
+
+expect_exit              = 2
+expect_summary_contains  = result=HaltedInterruptsDisabled
+expect_status_field_eq   = exit.result=HaltedInterruptsDisabled
+expect_status_field_eq   = exit.exit_code=2
+expect_status_field_eq   = exit.di_to_halt_cycles=12

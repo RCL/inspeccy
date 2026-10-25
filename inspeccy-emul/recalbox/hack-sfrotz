@@ -1,0 +1,18 @@
+#!/bin/bash
+# Hijacked sfrotz: Recalbox's frotz generator launches this; for the ZX
+# Spectrum Next system we run inspeccy-emul instead.  The .nex is among the
+# arguments the generator passes; the share is noexec so we stage to tmpfs.
+ROM=""
+for a in "$@"; do case "$a" in *.nex|*.NEX) ROM="$a";; esac; done
+[ -z "$ROM" ] && ROM="$(ls /recalbox/share/roms/zxnext/*.nex /recalbox/share/roms/zxnext/*.NEX 2>/dev/null | head -1)"
+DIR=/recalbox/share/system/inspeccy-emul
+LOG=/recalbox/share/roms/zxnext/log.txt
+{
+  echo "hijacked sfrotz $(date): args: $*"
+  echo "rom: $ROM"
+  cp -f "$DIR/inspeccy-emul" /tmp/inspeccy-emul && chmod +x /tmp/inspeccy-emul
+  [ -f "$DIR/gamecontrollerdb.txt" ] && cp -f "$DIR/gamecontrollerdb.txt" /tmp/
+  cd /tmp
+  ./inspeccy-emul "$ROM" --vfs "$(dirname "$ROM")" --crop 16 --fullscreen
+  echo "exit $?"
+} > "$LOG" 2>&1

@@ -1,0 +1,19 @@
+# snownononext is a graphical demo: 28 MHz turbo + IM 2 frame interrupts
+# via NR_C0 hardware-vector routing + AY music + a 256x192 snow effect on
+# the standard ULA screen (bank 5). It deliberately never returns to
+# NextZXOS — runs forever in a `jr $` loop driven by the IM 2 handler.
+# The smoke covers the must-haves we just landed for these demos.
+
+description    = snownononext: 28 MHz turbo, IM 2 vector via NR_C0, AY music ticking
+dot            = data/programs/snownononext.dot
+seconds        = 2
+
+expect_exit              = 0
+# Turbo callback rescaled the budget: 2 s * 28 MHz ≈ 56M cycles.
+expect_summary_matches   = cycles=5[0-9]\d{6}
+# IM 2 acceptance must fire ~50 frames in 1 wall-clock second (so ~100 in
+# 2 s; turbo NR_07 rescaling keeps the cadence). Pin a loose lower bound.
+expect_summary_matches   = ints=\d{2,}
+# AY music actively writing throughout the run.
+expect_summary_matches   = aywrites=[1-9]\d+
+expect_status_field_eq   = exit.result=BudgetReached

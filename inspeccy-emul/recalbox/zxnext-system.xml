@@ -1,0 +1,9 @@
+  <system uuid="e804f3d1-92d1-4009-bd21-21aa0bae422a" name="zxnext" fullname="ZX Spectrum Next">
+    <descriptor path="%ROOT%/zxnext" theme="zxspectrum" extensions=".nex .NEX" extension.types="*=file" icon="$F251" downloader="0"/>
+    <properties type="computer" pad="optional" keyboard="optional" mouse="no" lightgun="no" releasedate="2020-02" manufacturer="SpecNext Ltd" retroachievements="0" crt.multiresolution="0" crt.multiregion="0" ignoredfiles=""/>
+    <emulatorList>
+      <emulator name="frotz">
+        <core name="frotz" priority="1" extensions=".nex .NEX" netplay="0" softpatching="0" compatibility="high" speed="high" crt.available="0" video.backend="default"/>
+      </emulator>
+    </emulatorList>
+  </system>

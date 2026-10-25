@@ -1,0 +1,12 @@
+# EI; HALT enters fast-forward, snapping cycles to the next frame interrupt
+# again and again. Most of the run is HALT cycles → cpu_busy_pct very low.
+# Run for 0.5 second (~ 25 frames at 50Hz) to get a stable median.
+
+description    = EI; HALT accumulates halt cycles; cpu_busy_pct near zero
+sna            = data/sna/halt_ei.sna
+seconds        = 0.5
+
+expect_exit              = 0
+expect_summary_contains  = result=BudgetReached
+expect_status_field_eq   = exit.result=BudgetReached
+expect_status_field_eq   = vram.uniform_screen=true

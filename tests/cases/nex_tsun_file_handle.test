@@ -1,0 +1,19 @@
+# TouchingTheSun.nex (3.4 MB) declares fileHandleCfg=$918E in its header.
+# After LoadNex, the NEX file is auto-registered as VFS handle 1, the byte
+# handle (=1) is written to [$918E], and the demo's RST $08 calls resolve
+# to that handle. A 0.1 s run is enough to see at least one F_READ.
+
+description    = NEX file-handle pass-through: handle 1 registered, demo F_READs from it
+nex            = data/programs/TouchingTheSun.nex
+machine        = next50
+seconds        = 0.1
+
+expect_exit                = 0
+# Pre-registered handle 1 surfaces in the open_handles map.
+expect_dump_field_eq       = vfs.stats.files_opened=1
+expect_dump_field_eq       = vfs.stats.rst08_unknown=0
+expect_dump_field_eq       = vfs.open_handles.h1.writable=false
+# Header confirms the streaming hook is what we think it is.
+expect_dump_field_eq       = nex.initial_pc=$8000
+expect_dump_field_eq       = nex.initial_sp=$9FFF
+expect_dump_field_eq       = nex.num_banks=26

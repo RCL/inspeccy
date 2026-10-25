@@ -1,0 +1,18 @@
+# A dot-cmd run is in Next mode (machine = "next50" auto-selected when
+# --dot is the source). The status JSON's machine field should reflect
+# that, and the displayed bank in the VRAM block should still be 5
+# (ULA's bank 5 — even though we render the L2 layer, the bank-5 attr
+# counters keep working unchanged).
+
+description    = dot-cmd run auto-selects next50 machine + ULA bank counters intact
+dot            = data/programs/nxiview.dot
+dot_arg        = synthetic-320-pal.nxi
+vfs            = data/dotcmd
+seconds        = 2
+
+expect_exit                = 0
+expect_status_field_eq     = vram.displayed_bank=5
+# nxiview's `nextreg NR_TURBO_MODE, 3` flips the CPU to 28 MHz at startup,
+# so by the time the dump is taken FrameIntPeriod has been rescaled 8x to
+# keep the 50 Hz interrupt cadence steady in wall-clock terms.
+expect_status_field_eq     = interrupts.frame_int_period=559104

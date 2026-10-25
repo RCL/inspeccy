@@ -1,0 +1,12 @@
+# A single LD ($5800), A counts as a bank-5 attr write.
+# screen_attr_paint.sna: ld a,$07; ld ($5800),a; di; halt
+
+description    = LD ($5800),A counts as a bank-5 attr write
+sna            = data/sna/screen_attr_paint.sna
+seconds        = 0.1
+
+expect_exit              = 6
+expect_status_field_eq   = vram.attr_writes_bank5=1
+expect_status_field_eq   = vram.pixel_writes_bank5=0
+expect_status_field_eq   = vram.attrs_all_equal=false
+expect_status_field_eq   = vram.distinct_attrs=2

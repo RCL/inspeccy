@@ -1,0 +1,24 @@
+# Round-trip: phase 1 runs nop_loop.sna for 0.05s (~177000 cycles).
+# Phase 2 resumes from that dump and runs another 0.05s.
+# Final cycles_total should be the sum (≈ 354700).
+#
+# Interrupts must be off so the cycle math is deterministic: even one ULA
+# frame interrupt mid-test perturbs total cycles by 13 (IM1 vector accept)
+# + the ROM ISR's body length, breaking the simple "16 cyc per nop+jr iter"
+# accounting the test expectations are anchored to.
+
+description    = nop_loop runs, dumps, resumes — cycles accumulate
+phase1_sna     = data/sna/nop_loop.sna
+phase1_seconds = 0.05
+seconds        = 0.05
+no_interrupts  = true
+
+expect_exit              = 0
+expect_status_field_eq   = exit.result=BudgetReached
+# nop_loop.sna is a 128K snapshot, so it runs at the 128K nominal clock:
+# 0.1s @ 3.54690 MHz = 354690 cycles. Each loop iter is NOP+JR = 16 cycles,
+# and RunUntil exits at the next instruction boundary past Budget, plus the
+# per-phase boundary overshoot, landing on 354704 deterministically.
+# (Re-pinned from 350016 when machines gained their true nominal clocks —
+# the old pin assumed a flat 3.5 MHz.)
+expect_dump_field_eq     = stats.cycles_total=354704

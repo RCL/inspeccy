@@ -1,0 +1,10 @@
+# DI followed by 100 NOPs then HALT — classic lost-EI bug shape.
+# di_to_halt_cycles should be DI(4) + 100*NOP(4) + HALT(4) = 408.
+
+description    = DI; 100 NOPs; HALT classifies as bug-shaped InterruptsDisabled
+sna            = data/sna/halt_bug.sna
+seconds        = 0.1
+
+expect_exit              = 2
+expect_status_field_eq   = exit.result=HaltedInterruptsDisabled
+expect_status_field_eq   = exit.di_to_halt_cycles=408

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>inspeccy-emul</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #151515; color: #ddd;
+         font: 15px/1.5 -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  main { max-width: 900px; margin: 24px auto 40px; padding: 0 16px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #eee; }
+  p { margin: 0 0 12px; }
+  .screen { position: relative; background: #000; border-radius: 4px;
+            overflow: hidden; max-width: 100%; }
+  canvas { display: block; width: 100%; height: auto; image-rendering: pixelated;
+           background: #000; outline: none; }
+  .cover { position: absolute; inset: 0; display: flex; flex-direction: column;
+           align-items: center; justify-content: center; gap: 10px;
+           background: rgba(0,0,0,.72); text-align: center; padding: 16px; }
+  .cover[hidden] { display: none !important; }
+  button { font: inherit; padding: 8px 18px; border: 0; border-radius: 4px;
+           background: #9ac9ec; color: #111; cursor: pointer; }
+  button:hover { background: #fff; }
+  progress { width: 220px; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 12px 0; }
+  .row button { background: #333; color: #ddd; }
+  .row button:hover { background: #444; color: #fff; }
+  small, .muted { color: #999; }
+  table { border-collapse: collapse; margin: 8px 0 16px; }
+  td { padding: 2px 16px 2px 0; vertical-align: top; }
+  kbd { background: #2a2a2a; border: 1px solid #444; border-bottom-width: 2px;
+        border-radius: 3px; padding: 1px 5px; font-size: 13px; }
+  #log { width: 100%; height: 130px; background: #0e0e0e; color: #9a9;
+         border: 1px solid #333; border-radius: 4px; padding: 8px;
+         font: 12px/1.45 ui-monospace, Consolas, monospace; white-space: pre-wrap; overflow: auto; }
+  @media (max-width: 540px) { main { margin-top: 12px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>inspeccy-emul</h1>
+  <p class="muted">A ZX Spectrum Next program, run by the inspeccy core compiled to WebAssembly.</p>
+
+  <div class="screen">
+    <canvas id="canvas" width="320" height="256" tabindex="-1"
+            oncontextmenu="event.preventDefault()"></canvas>
+    <div class="cover" id="cover">
+      <button id="start" type="button" disabled>Loading…</button>
+      <progress id="bar" max="100" value="0"></progress>
+      <small>Needs a keyboard. Your settings stay in this browser.</small>
+    </div>
+  </div>
+
+  <div class="row">
+    <button id="full" type="button">Full screen</button>
+    <button id="reset" type="button">Clear saved settings</button>
+    <span class="muted" id="status"></span>
+  </div>
+
+  <table>
+    <tr><td>Move</td><td><kbd>←</kbd> <kbd>→</kbd> turn, <kbd>↑</kbd> thrust, <kbd>↓</kbd> reverse</td></tr>
+    <tr><td>Fire 1 / 2 / 3</td><td><kbd>Right Ctrl</kbd> / <kbd>Right Alt</kbd> / <kbd>Right Shift</kbd></td></tr>
+    <tr><td>Spectrum keys</td><td>letters, digits, <kbd>Enter</kbd>, <kbd>Space</kbd>; <kbd>Shift</kbd> = CAPS SHIFT</td></tr>
+    <tr><td>Pause / quit</td><td><kbd>Esc</kbd> (EDIT)</td></tr>
+  </table>
+
+  <div id="log" aria-label="Emulator messages"></div>
+</main>
+
+<script>
+(function () {
+  var canvas = document.getElementById('canvas');
+  var cover = document.getElementById('cover');
+  var startButton = document.getElementById('start');
+  var bar = document.getElementById('bar');
+  var status = document.getElementById('status');
+  var logBox = document.getElementById('log');
+  var started = false, visible = true, releasing = false;
+  var held = {};
+  var query = new URLSearchParams(location.search);
+  // The program: packed into the page at build time, or -- when none was --
+  // fetched from beside it, so one built player can run any .nex.
+  var wanted = query.get('nex') || 'program.nex';
+
+  function log(text) {
+    logBox.textContent += text + '\n';
+    logBox.scrollTop = logBox.scrollHeight;
+  }
+
+  // The program's own files (settings, results) live in IndexedDB so they
+  // survive a reload; the page loads them before main runs.
+  var Module = {
+    canvas: canvas,
+    arguments: [],
+    print: log,
+    printErr: log,
+    setStatus: function (text) {
+      if (!text) { return; }
+      var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+      if (m) {
+        bar.value = parseInt(m[2], 10) * 100 / parseInt(m[4], 10);
+        startButton.textContent = 'Loading…';
+      } else {
+        status.textContent = text;
+      }
+    },
+    preRun: [function () {
+      // Read the saved files before the program starts, but never wait for
+      // them for ever: a browser with storage blocked (or a private window)
+      // simply plays without keeping anything.
+      var done = false;
+      function ready(why) {
+        if (done) { return; }
+        done = true;
+        if (why) { log('inspeccy-emul: ' + why + ': settings will not be kept'); }
+        Module.removeRunDependency('idbfs');
+      }
+      Module.addRunDependency('idbfs');
+      try {
+        FS.mkdir('/data');
+        FS.mount(IDBFS, {}, '/data');
+        FS.syncfs(true, function (err) { ready(err ? 'storage unreadable (' + err + ')' : ''); });
+      } catch (e) {
+        ready('no storage (' + e + ')');
+      }
+      setTimeout(function () { ready('storage did not answer'); }, 3000);
+    }, function () {
+      // Nothing packed in? Fetch the program beside the page instead.
+      var already = [];
+      try { already = FS.readdir('/game').filter(isNex); } catch (e) { already = []; }
+      if (already.length) { return; }
+      Module.addRunDependency('nex');
+      fetch(wanted).then(function (r) {
+        if (!r.ok) { throw new Error(r.status + ' ' + r.statusText); }
+        return r.arrayBuffer();
+      }).then(function (buffer) {
+        try { FS.mkdir('/game'); } catch (e) {}
+        FS.writeFile('/game/' + wanted.split('/').pop().split('?')[0],
+                     new Uint8Array(buffer));
+        Module.removeRunDependency('nex');
+      }).catch(function (e) {
+        log('inspeccy-emul: could not load ' + wanted + ': ' + e.message);
+        Module.removeRunDependency('nex');
+      });
+    }],
+    onRuntimeInitialized: function () {
+      startButton.disabled = false;
+      startButton.textContent = 'Play';
+      bar.hidden = true;
+    }
+  };
+  window.Module = Module;
+
+  function isNex(name) { return /\.nex$/i.test(name); }
+
+  // Which program to run, and how.  ?nex= names it (a file already in /game,
+  // or a URL beside the page); ?crop=N hides N rows top and bottom for a
+  // program that leaves them blank; ?hz=auto measures the display.
+  function programArguments() {
+    var list;
+    try { list = FS.readdir('/game').filter(isNex); } catch (e) { list = []; }
+    var name = list.indexOf(wanted) >= 0 ? wanted : list[0];
+    if (!name) { log('inspeccy-emul: no .nex to run (tried ' + wanted + ')'); return null; }
+    var args = ['/game/' + name];
+    var crop = parseInt(query.get('crop'), 10);
+    if (crop > 0) { args.push('--crop', String(crop)); }
+    var hz = query.get('hz');
+    if (hz === 'auto') { hz = String(displayHz); }
+    if (hz === '50' || hz === '60') { args.push('--hz', hz); }
+    if (query.get('renderer') === 'accurate') { args.push('--pixel-accurate'); }
+    return args;
+  }
+
+  // ?hz=auto: sample the idle display once, before boot.  Only a steady
+  // ~60 Hz display gets a 60 Hz Next; anything else, or an unknown rate,
+  // gets 50.  Never resampled during play -- load or throttling must not
+  // change the emulated machine's clock.
+  var displayHz = 50;
+  function measureDisplay(done) {
+    if (query.get('hz') !== 'auto') { return done(); }
+    var intervals = [], previous, warmup = 4, request, finished = false;
+    var timer = setTimeout(finish, 1500);
+    function finish() {
+      if (finished) { return; }
+      finished = true;
+      clearTimeout(timer);
+      cancelAnimationFrame(request);
+      intervals.sort(function (a, b) { return a - b; });
+      var median = intervals.length >= 30 ? intervals[Math.floor(intervals.length / 2)] : 0;
+      var near60 = intervals.filter(function (ms) { return Math.abs(ms - 1000 / 60) < 1; }).length;
+      displayHz = (median && Math.abs(1000 / median - 60) < 0.75 && near60 >= 24) ? 60 : 50;
+      done();
+    }
+    function sample(now) {
+      if (finished) { return; }
+      if (previous !== undefined) { if (warmup) { warmup--; } else { intervals.push(now - previous); } }
+      previous = now;
+      if (intervals.length === 30) { finish(); } else { request = requestAnimationFrame(sample); }
+    }
+    request = requestAnimationFrame(sample);
+  }
+
+  // SDL takes key events from the window, so they must not reach it while
+  // the visitor is using the rest of the page -- and anything still held
+  // when the canvas loses focus must be let go, or the program sees it
+  // stuck down.
+  function release() {
+    releasing = true;
+    for (var code in held) {
+      window.dispatchEvent(new KeyboardEvent('keyup', held[code]));
+    }
+    held = {};
+    releasing = false;
+  }
+
+  function pauseState() {
+    if (!window.Module) { return; }
+    Module.paused = !started || !visible || document.hidden;
+    if (Module.paused) { release(); }
+  }
+
+  function begin() {
+    if (started) { return; }
+    var args = programArguments();
+    if (!args) { return; }
+    started = true;
+    cover.hidden = true;
+    canvas.focus();
+    if (window.IntersectionObserver) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        pauseState();
+      }, { threshold: 0.25 }).observe(canvas);
+    }
+    // The browser only allows sound once the person has done something.
+    if (window.AudioContext && Module.SDL2 && Module.SDL2.audioContext) {
+      Module.SDL2.audioContext.resume();
+    }
+    Module.callMain(args);
+    pauseState();
+  }
+  startButton.addEventListener('click', function () { measureDisplay(begin); });
+
+  // A browser only starts sound after a gesture, and the first one may have
+  // been spent on the async load.
+  canvas.addEventListener('pointerdown', function () {
+    if (Module.SDL2 && Module.SDL2.audioContext) { Module.SDL2.audioContext.resume(); }
+  });
+  canvas.addEventListener('blur', release);
+  document.addEventListener('visibilitychange', pauseState);
+
+  // ?autostart=1 begins without the button: for a test harness, and for a
+  // page that has already asked the person to click something of its own.
+  // (A browser still only allows sound after a real click.)
+  if (query.get('autostart') === '1') {
+    var was = Module.onRuntimeInitialized;
+    Module.onRuntimeInitialized = function () { was(); measureDisplay(begin); };
+  }
+
+  document.getElementById('full').addEventListener('click', function () {
+    if (canvas.requestFullscreen) { canvas.requestFullscreen(); }
+    else if (canvas.webkitRequestFullscreen) { canvas.webkitRequestFullscreen(); }
+    canvas.focus();
+  });
+
+  document.getElementById('reset').addEventListener('click', function () {
+    if (!confirm('Clear the settings and results saved in this browser?')) { return; }
+    try {
+      FS.readdir('/data').forEach(function (f) {
+        if (f !== '.' && f !== '..') { FS.unlink('/data/' + f); }
+      });
+      FS.syncfs(false, function () { location.reload(); });
+    } catch (e) { log('inspeccy-emul: ' + e); }
+  });
+
+  // The keys the emulator wants must not also scroll or quit the page.
+  ['keydown', 'keyup'].forEach(function (type) {
+    window.addEventListener(type, function (e) {
+      if (releasing) { return; }
+      if (!started || document.activeElement !== canvas) { e.stopImmediatePropagation(); return; }
+      if (type === 'keydown') {
+        held[e.code] = { key: e.key, code: e.code, keyCode: e.keyCode, which: e.which };
+      } else {
+        delete held[e.code];
+      }
+      var keep = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'Tab',
+                  'Enter', 'Escape', 'Backspace', 'AltRight'];
+      if (keep.indexOf(e.code) >= 0 || keep.indexOf(e.key) >= 0) { e.preventDefault(); }
+    }, { capture: true });
+  });
+
+  // Write the files out when the page goes away, as well as after a write.
+  window.addEventListener('pagehide', function () {
+    try { FS.syncfs(false, function () {}); } catch (e) {}
+  });
+})();
+</script>
+{{{ SCRIPT }}}
+</body>
+</html>

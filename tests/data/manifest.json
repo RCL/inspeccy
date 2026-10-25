@@ -1,0 +1,701 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "path": "data/dck/lros_smoke.dck",
+      "bytes": 16393,
+      "sha256": "3d9336bcda5c7ab3a60d4950104f67bff137a591d3965fd6a0398a7ba030f7e4",
+      "provenance": "Byte-for-byte reproduced by data/dck/src/make_lros_smoke.py and lros_smoke.asm."
+    },
+    {
+      "path": "data/dotcmd/next28_readwait.dot",
+      "bytes": 30,
+      "sha256": "880392591cfc2eaf87209c842a6b0ec9664f8786e7c08b14930c003fb4b8487e",
+      "provenance": "Byte-for-byte reproduced by sjasmplus from data/dotcmd/src/next28_readwait.asm."
+    },
+    {
+      "path": "data/dotcmd/synthetic-320-pal.nxi",
+      "bytes": 82432,
+      "sha256": "4928eefd3fadb5913db96aadbb7028c6da5f3743b214c74f0d6b960c704ac4ba",
+      "provenance": "Generated original test data; data/dotcmd/src/generate.py reproduces every byte."
+    },
+    {
+      "path": "data/dotcmd/TEST.DAT",
+      "bytes": 262144,
+      "sha256": "2312394bd99545d9de131c24efb781e765ac1aec243f2ed9347597a793a415e9",
+      "provenance": "Generated original test data; data/dotcmd/src/generate.py reproduces every byte."
+    },
+    {
+      "path": "data/nex/esxdos_rw.nex",
+      "bytes": 16896,
+      "sha256": "739a98af5530e4b86985b2701f9e819152f0d12eb27494f7acab9148c9443bec",
+      "provenance": "Byte-for-byte reproduced by sjasmplus from data/nex/src/esxdos_rw.asm."
+    },
+    {
+      "path": "data/nex/halt_masked_ula_int.nex",
+      "bytes": 16896,
+      "sha256": "96435b537ce76c7a05ac606ea5be3e50c24fd3dd6060081b758eed7b39ac997c",
+      "provenance": "Byte-for-byte reproduced by sjasmplus from data/nex/src/halt_masked_ula_int.asm."
+    },
+    {
+      "path": "data/nex/loading_screen_l2.nex",
+      "bytes": 66560,
+      "sha256": "e04f075fe46dc791bec629d12954f9ac8a4c4e1a60163b32926b956753073c6f",
+      "provenance": "Byte-for-byte reproduced by sjasmplus from data/nex/src/loading_screen_l2.asm."
+    },
+    {
+      "path": "data/nex/src/loading_l2.bmp",
+      "bytes": 50230,
+      "sha256": "9e5f45338c2890efe1dd433972c1693ec01f25cd0f4437bb35d589a845c2e625",
+      "provenance": "Byte-for-byte reproducible with data/nex/src/generate_loading_screen.py; diagonal stripes and a corner marker."
+    },
+    {
+      "path": "data/nex/trace_workload.nex",
+      "bytes": 16896,
+      "sha256": "4e2dac340c2d9b3c2777e1dfdf5778133f84d23999ceefa04b78d65bc0fe3c1b",
+      "provenance": "Byte-for-byte reproduced by sjasmplus from data/nex/src/trace_workload.asm."
+    },
+    {
+      "path": "data/programs/NullForm.nex",
+      "bytes": 2733323,
+      "sha256": "633363b00480c5e712a902ebb0f5134ada458261e77c06c87025c4f3cb20cbec",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/NullForm_Party_Version.nex",
+      "bytes": 2733323,
+      "sha256": "ceb34621213338914ee34886757e63c2110362d9d25934d9ff61c62a0b98e1ea",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/nxiview.dot",
+      "bytes": 1843,
+      "sha256": "6ed4bad79c6e2edd41064d35fcae561f950f8ca554b5eb6829cdbe68273de8a0",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/parallelvisions.tap",
+      "bytes": 3944,
+      "sha256": "ee732960387c5a942edd0d4f29551eaa1a7ac7e5b53ebca56527f484302e3425",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/rtzx.sna",
+      "bytes": 131103,
+      "sha256": "a104e0ab1f60e2eee7c16c509f5410f87586b672cc513f45a6ddd07bd9166bdd",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/rtzx_main_next.nex",
+      "bytes": 49664,
+      "sha256": "f280af28f87297097b10682bfdc8345d2cf49f03ad1d35c0875ac867417e2edb",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/snownononext.dot",
+      "bytes": 1023,
+      "sha256": "406ed5738c63040117bbcaf81ef2492080cd28109aa0bc5fee48deba18ad57b5",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/snownononext.nex",
+      "bytes": 16896,
+      "sha256": "bcf94c8fdf3c1b3090169b0ecb1000958da9ddc9edcec54da15e63207e611b4c",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/sup.dot",
+      "bytes": 4027,
+      "sha256": "0fc837bba54fbc7b97ecbb8ac5a03ba0bed05b301e6a8038ac03907c4c9912b0",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/sup_main.nex",
+      "bytes": 131584,
+      "sha256": "324168a3ebd5a5d779c1535794fc7eabb5f8585ee93d1d71fdf79482001cc0be",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/TouchingTheSun.nex",
+      "bytes": 3489876,
+      "sha256": "e402376865725c1a993f44334bac347b08fe5d3e61876f7651c38c92f4a29cca",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/VVGIntro.sna",
+      "bytes": 147487,
+      "sha256": "0e197abf405bc6da543d3a850de702384113a79d955805e19712eb5dad752f9d",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/programs/vvgintro.trd",
+      "bytes": 36608,
+      "sha256": "20c22843b9c4e203b6014362962e29eed1aec24fad5ff90f93b8df981e745c38",
+      "provenance": "Original program; ownership confirmed by RCL (Arciel Rekman). Application sources maintained separately."
+    },
+    {
+      "path": "data/sna/border_red.sna",
+      "bytes": 131103,
+      "sha256": "1b198a33aada08f30ec30f25d3a24a7a76ecc249b989b1419e39c35c487b5f1a",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/halt_bug.sna",
+      "bytes": 131103,
+      "sha256": "1e3521fa056198a0fce21931ef80f9823a0a6895e30a1ea332794c1559f4d9d4",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/halt_di_nop_halt.sna",
+      "bytes": 131103,
+      "sha256": "ad76f375ae6b5d60a47fbb0210a4088cbbf957f4e68e7ea3fd3241816d384619",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/halt_ei.sna",
+      "bytes": 131103,
+      "sha256": "55b76e5cf49ec345ee7ce148a96cc8420fe8ac467a5b37ed9f97535dc4c6dad5",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/nop_loop.sna",
+      "bytes": 131103,
+      "sha256": "83c209de379363791dbec0e381475c721e1c9dd4478bbc1c86923f00387d71e2",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/otir_to_7ffd.sna",
+      "bytes": 131103,
+      "sha256": "650dd3f5dfef79e57743fce63bc2813e500b732138238ae3814220c93be20318",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/psg_mask_r1.sna",
+      "bytes": 131103,
+      "sha256": "1dfd184b4269617fa6a3142934778b5f846b7a7a47bd28619d2a87a43b93e45a",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/psg_silent.sna",
+      "bytes": 131103,
+      "sha256": "52ea879e4254a1edf4353feed1a533e7042a67d7a4f7c551f666cb3a886cade3",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/restart_into_rom.sna",
+      "bytes": 131103,
+      "sha256": "9f9c89fe77dacf270a50efd261b911740c6aac10108765d822cfe1d9c33a1a6f",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/screen_attr_paint.sna",
+      "bytes": 131103,
+      "sha256": "84410f1a75bd1f7c59018f3dae50f7ce51f3728764cc6fc37ea613f12a53a544",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/screen_pixel_write.sna",
+      "bytes": 131103,
+      "sha256": "09fa7128861b4e5fa11f1a7a4fa53fba965373d040b92b8007b6cbfbe1d40bcb",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "data/sna/uniform_white.sna",
+      "bytes": 131103,
+      "sha256": "58d8bf042bef78b19469d2825d1e383c86bafaf791915243e34864eb5a4a4e09",
+      "provenance": "Byte-for-byte reproducible with data/sna/src/generate.py; short machine code and zero-filled RAM."
+    },
+    {
+      "path": "refs/nex/loading_screen_l2.bmp",
+      "bytes": 245814,
+      "sha256": "17b66c25b74fddb4916fea211db1eb31d61d5202adf5eafb822b13d472317d07",
+      "provenance": "Emulator-rendered reference for the synthetic data/nex/loading_screen_l2.nex fixture."
+    },
+    {
+      "path": "refs/video/l2/256/clip_window.bmp",
+      "bytes": 245814,
+      "sha256": "590ecd7ffd3ff2e3bc7941c5d4346690a319c8ee72192559125f7b2205465817",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/256/clip_window.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/256/fallback_4a.bmp",
+      "bytes": 245814,
+      "sha256": "e67571a251bebe425bd4b27c58b99c35cc54362500d4a85fc71584219cf4ff2c",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/256/fallback_4a.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/256/fallback_color.bmp",
+      "bytes": 245814,
+      "sha256": "6b022900f28a99979699a33704b454370e868c3fbebc442c9e34d96f46b102d7",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/256/fallback_color.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/256/scroll_x.bmp",
+      "bytes": 245814,
+      "sha256": "dc8f49713d8751d33335835279e1ce746fcc0c9a8291809accc12b500dd7c9df",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/256/scroll_x.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/256/scroll_y.bmp",
+      "bytes": 245814,
+      "sha256": "3171b44cc72bf980fda8fe0247d243d593caf249229cb0a9d4af830a8c4be163",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/256/scroll_y.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/256/solid_blue_9bit.bmp",
+      "bytes": 245814,
+      "sha256": "e2350bb5b083a733f02b3f4b1f0b87b2ea390e56009b8c6eba53ef725e24f7fa",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/256/solid_blue_9bit.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/256/solid_red.bmp",
+      "bytes": 245814,
+      "sha256": "785082209ebcbfcf3bd7fe5994ecbc3024caae2276ad9a818396de28fc9e8b62",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/256/solid_red.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/256/stripe_left_right.bmp",
+      "bytes": 245814,
+      "sha256": "c035f6d100be7a3b9381c35208d2f9a17b8fa6defcd21193fd171f8d6c3bda4b",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/256/stripe_left_right.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/256/transparent_all.bmp",
+      "bytes": 245814,
+      "sha256": "9598e5527b87b9df56d948a9f4e0e6144914b9c3377f8c880165066f08f5ef5d",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/256/transparent_all.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/256/transparent_mixed.bmp",
+      "bytes": 245814,
+      "sha256": "d1e975005f40dcc2d292a5cdd9cf930541ad3906ad376ddcd55f3f202e7f2cd1",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/256/transparent_mixed.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/320/fallback_color.bmp",
+      "bytes": 245814,
+      "sha256": "ebd41da05c44e1c3166b37c939c3d12843148e6638e1e469221e70051d6ac9f1",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/320/fallback_color.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/320/scroll_x.bmp",
+      "bytes": 245814,
+      "sha256": "7ae11389fbc7f2d576f9a1dfa164441d5f541fe2be9874af26f61b0709e7a51d",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/320/scroll_x.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/320/scroll_y.bmp",
+      "bytes": 245814,
+      "sha256": "f4c8f8fb9f1f1520d8227d67d610b68cbf41ef8277dcc154f2a556e3feffcd86",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/320/scroll_y.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/320/solid_blue_9bit.bmp",
+      "bytes": 245814,
+      "sha256": "1f8d293587e99364528a4717241a07c97ff770d37eec1f0d3b28f4311aa9768e",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/320/solid_blue_9bit.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/320/solid_red.bmp",
+      "bytes": 245814,
+      "sha256": "f714cf8155a3dcded8da5773c56ab94e78877b8c0aac2f3466a22528935d572b",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/320/solid_red.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/320/stripe_left_right.bmp",
+      "bytes": 245814,
+      "sha256": "2f6a7fe5b3341aec0b7ea18dc14206a3c4da59bce57751d8b37fcb5158af4a16",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/320/stripe_left_right.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/320/transparent_all.bmp",
+      "bytes": 245814,
+      "sha256": "ebd41da05c44e1c3166b37c939c3d12843148e6638e1e469221e70051d6ac9f1",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/320/transparent_all.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/320/transparent_mixed.bmp",
+      "bytes": 245814,
+      "sha256": "5e3dd8b63b0e8882ed3c9ed8813f3d446968a305d77cfb492d1f514820764b79",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/320/transparent_mixed.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/640/fallback_color.bmp",
+      "bytes": 245814,
+      "sha256": "ebd41da05c44e1c3166b37c939c3d12843148e6638e1e469221e70051d6ac9f1",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/640/fallback_color.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/640/scroll_x.bmp",
+      "bytes": 245814,
+      "sha256": "e68613fe0a751d7d7fb96f7271d5594af2e9be836311ae58c81eb383b3da5669",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/640/scroll_x.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/640/scroll_y.bmp",
+      "bytes": 245814,
+      "sha256": "f4c8f8fb9f1f1520d8227d67d610b68cbf41ef8277dcc154f2a556e3feffcd86",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/640/scroll_y.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/640/solid_blue_9bit.bmp",
+      "bytes": 245814,
+      "sha256": "1f8d293587e99364528a4717241a07c97ff770d37eec1f0d3b28f4311aa9768e",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/640/solid_blue_9bit.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/640/solid_red.bmp",
+      "bytes": 245814,
+      "sha256": "f714cf8155a3dcded8da5773c56ab94e78877b8c0aac2f3466a22528935d572b",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/640/solid_red.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/640/stripe_left_right.bmp",
+      "bytes": 245814,
+      "sha256": "2f6a7fe5b3341aec0b7ea18dc14206a3c4da59bce57751d8b37fcb5158af4a16",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/640/stripe_left_right.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/640/transparent_all.bmp",
+      "bytes": 245814,
+      "sha256": "ebd41da05c44e1c3166b37c939c3d12843148e6638e1e469221e70051d6ac9f1",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/640/transparent_all.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/l2/640/transparent_mixed.bmp",
+      "bytes": 245814,
+      "sha256": "5e3dd8b63b0e8882ed3c9ed8813f3d446968a305d77cfb492d1f514820764b79",
+      "provenance": "Emulator-rendered regression reference for asm/video/l2/640/transparent_mixed.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/layering/lsu.bmp",
+      "bytes": 245814,
+      "sha256": "785082209ebcbfcf3bd7fe5994ecbc3024caae2276ad9a818396de28fc9e8b62",
+      "provenance": "Emulator-rendered regression reference for asm/video/layering/lsu.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/layering/lus.bmp",
+      "bytes": 245814,
+      "sha256": "785082209ebcbfcf3bd7fe5994ecbc3024caae2276ad9a818396de28fc9e8b62",
+      "provenance": "Emulator-rendered regression reference for asm/video/layering/lus.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/layering/slu.bmp",
+      "bytes": 245814,
+      "sha256": "2f5e4cd768efc8122e2ec15f6b2827f6dcd02119b1ddd6710930ec5e5b7625a1",
+      "provenance": "Emulator-rendered regression reference for asm/video/layering/slu.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/layering/sul.bmp",
+      "bytes": 245814,
+      "sha256": "9ef42bb25ca380b773f2e5b45e23383fa2ae4df0fc1cc1b926b45c7cc126a239",
+      "provenance": "Emulator-rendered regression reference for asm/video/layering/sul.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/layering/ula_blend.bmp",
+      "bytes": 245814,
+      "sha256": "103801cd441b531dc6ed9e91820ac3606a55e6cf13763cdaf273d4a354753039",
+      "provenance": "Emulator-rendered regression reference for asm/video/layering/ula_blend.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/layering/ula_half_blend.bmp",
+      "bytes": 245814,
+      "sha256": "ee8f6f2c53bf1f2e1b811f63efb3a703e0eaa01f937e894e8fa4d54ea8666c54",
+      "provenance": "Emulator-rendered regression reference for asm/video/layering/ula_half_blend.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/layering/uls.bmp",
+      "bytes": 245814,
+      "sha256": "e67571a251bebe425bd4b27c58b99c35cc54362500d4a85fc71584219cf4ff2c",
+      "provenance": "Emulator-rendered regression reference for asm/video/layering/uls.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/layering/usl.bmp",
+      "bytes": 245814,
+      "sha256": "e67571a251bebe425bd4b27c58b99c35cc54362500d4a85fc71584219cf4ff2c",
+      "provenance": "Emulator-rendered regression reference for asm/video/layering/usl.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/16c/fallback_color.bmp",
+      "bytes": 245814,
+      "sha256": "6b022900f28a99979699a33704b454370e868c3fbebc442c9e34d96f46b102d7",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/16c/fallback_color.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/16c/scroll_x.bmp",
+      "bytes": 245814,
+      "sha256": "dc8f49713d8751d33335835279e1ce746fcc0c9a8291809accc12b500dd7c9df",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/16c/scroll_x.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/16c/scroll_xy_combined.bmp",
+      "bytes": 245814,
+      "sha256": "74cf24dd6fa3286bc552cdd37f356cacc67c1ff3c0028e4297fd0ee6c9d0b5d2",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/16c/scroll_xy_combined.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/16c/scroll_y.bmp",
+      "bytes": 245814,
+      "sha256": "3171b44cc72bf980fda8fe0247d243d593caf249229cb0a9d4af830a8c4be163",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/16c/scroll_y.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/16c/solid_blue_9bit.bmp",
+      "bytes": 245814,
+      "sha256": "e2350bb5b083a733f02b3f4b1f0b87b2ea390e56009b8c6eba53ef725e24f7fa",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/16c/solid_blue_9bit.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/16c/solid_red.bmp",
+      "bytes": 245814,
+      "sha256": "785082209ebcbfcf3bd7fe5994ecbc3024caae2276ad9a818396de28fc9e8b62",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/16c/solid_red.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/16c/stripe_left_right.bmp",
+      "bytes": 245814,
+      "sha256": "c035f6d100be7a3b9381c35208d2f9a17b8fa6defcd21193fd171f8d6c3bda4b",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/16c/stripe_left_right.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/16c/transparent_all.bmp",
+      "bytes": 245814,
+      "sha256": "9598e5527b87b9df56d948a9f4e0e6144914b9c3377f8c880165066f08f5ef5d",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/16c/transparent_all.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/16c/transparent_mixed.bmp",
+      "bytes": 245814,
+      "sha256": "492f2251bc6f08d1f5a6587b706400f6d5edb1fc03f185808aec62899d8f978a",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/16c/transparent_mixed.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/clip_window_ula.bmp",
+      "bytes": 245814,
+      "sha256": "36dd94fb4061d9e7c860804e5858f3b1b4a6f6fa43cc790bfd0fa659d934d256",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/clip_window_ula.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/fallback_color.bmp",
+      "bytes": 245814,
+      "sha256": "6b022900f28a99979699a33704b454370e868c3fbebc442c9e34d96f46b102d7",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/fallback_color.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/palette_nr43.bmp",
+      "bytes": 245814,
+      "sha256": "9c13430072ac8bbd711579bb3afea59e93fd485d91ae45d25f0e5115183692a1",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/palette_nr43.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/scroll_x.bmp",
+      "bytes": 245814,
+      "sha256": "dc8f49713d8751d33335835279e1ce746fcc0c9a8291809accc12b500dd7c9df",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/scroll_x.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/scroll_xy_combined.bmp",
+      "bytes": 245814,
+      "sha256": "74cf24dd6fa3286bc552cdd37f356cacc67c1ff3c0028e4297fd0ee6c9d0b5d2",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/scroll_xy_combined.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/scroll_y.bmp",
+      "bytes": 245814,
+      "sha256": "3171b44cc72bf980fda8fe0247d243d593caf249229cb0a9d4af830a8c4be163",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/scroll_y.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/solid_blue_9bit.bmp",
+      "bytes": 245814,
+      "sha256": "e2350bb5b083a733f02b3f4b1f0b87b2ea390e56009b8c6eba53ef725e24f7fa",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/solid_blue_9bit.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/solid_red.bmp",
+      "bytes": 245814,
+      "sha256": "785082209ebcbfcf3bd7fe5994ecbc3024caae2276ad9a818396de28fc9e8b62",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/solid_red.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/stripe_left_right.bmp",
+      "bytes": 245814,
+      "sha256": "c035f6d100be7a3b9381c35208d2f9a17b8fa6defcd21193fd171f8d6c3bda4b",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/stripe_left_right.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/transparent_all.bmp",
+      "bytes": 245814,
+      "sha256": "9598e5527b87b9df56d948a9f4e0e6144914b9c3377f8c880165066f08f5ef5d",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/transparent_all.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/lores/256c/transparent_mixed.bmp",
+      "bytes": 245814,
+      "sha256": "d1e975005f40dcc2d292a5cdd9cf930541ad3906ad376ddcd55f3f202e7f2cd1",
+      "provenance": "Emulator-rendered regression reference for asm/video/lores/256c/transparent_mixed.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/custom_transparent.bmp",
+      "bytes": 245814,
+      "sha256": "ae25a74d2bd38e4d81b3fe105ba85929cda0ab422a62f3217bc9ccc4a530cf3f",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/custom_transparent.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/many.bmp",
+      "bytes": 245814,
+      "sha256": "fa89a851febe741a0cdc043f67f01ec2b7876f103b6789a40a48006b48b511bb",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/many.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/mirror_rotate.bmp",
+      "bytes": 245814,
+      "sha256": "98d5bc37bad7de852e2653e2a01e8284a9abe8bd1a9f3173b15818e6052b11c7",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/mirror_rotate.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/nextreg_upload.bmp",
+      "bytes": 245814,
+      "sha256": "adfe387048b77ab25d57b6664784007146af75eb02a881c280246d7606a7a7a6",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/nextreg_upload.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/nr14_ignored.bmp",
+      "bytes": 245814,
+      "sha256": "e12a83ce140a06396b032dd7bd627bdc773fd2750901e684d5af956ce118a802",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/nr14_ignored.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/nr4b_default.bmp",
+      "bytes": 245814,
+      "sha256": "ae25a74d2bd38e4d81b3fe105ba85929cda0ab422a62f3217bc9ccc4a530cf3f",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/nr4b_default.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/otir_without_lockstep.bmp",
+      "bytes": 245814,
+      "sha256": "ec18f3ae655385fedac59ae36c4e8cc16a99346886dec95136257463c0571dbc",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/otir_without_lockstep.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/over_border_clip.bmp",
+      "bytes": 245814,
+      "sha256": "219ae3cfbddec755e42cc03fffea4344e474539e920b42e0da562547643007da",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/over_border_clip.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/overlap.bmp",
+      "bytes": 245814,
+      "sha256": "310f3ab8b6489fdd3fe0cf4add0fc4d3a9f23533dc9f1d4a6dfad63b81bf25fe",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/overlap.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/overlap_priority.bmp",
+      "bytes": 245814,
+      "sha256": "e12a83ce140a06396b032dd7bd627bdc773fd2750901e684d5af956ce118a802",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/overlap_priority.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/palette_offset_highnibble.bmp",
+      "bytes": 245814,
+      "sha256": "9598e5527b87b9df56d948a9f4e0e6144914b9c3377f8c880165066f08f5ef5d",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/palette_offset_highnibble.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/relative_sprites.bmp",
+      "bytes": 245814,
+      "sha256": "b525dfe7e1e39db7698f22929c5cfcf3e4dd0eedc6f416e05f7621c44ec866ac",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/relative_sprites.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/scaled.bmp",
+      "bytes": 245814,
+      "sha256": "fb2d2550b9ebfb46a48fb4c162d19c45de40e76f267f54839d676a39bf4ffb16",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/scaled.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/single.bmp",
+      "bytes": 245814,
+      "sha256": "e12a83ce140a06396b032dd7bd627bdc773fd2750901e684d5af956ce118a802",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/single.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/sprite_4bit.bmp",
+      "bytes": 245814,
+      "sha256": "130cc4a0a8ec397eb6b5d0e7a36a5451afff172d77ce091e78b11dfd4b0d8b69",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/sprite_4bit.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/sprites/transparent_pixel.bmp",
+      "bytes": 245814,
+      "sha256": "ae25a74d2bd38e4d81b3fe105ba85929cda0ab422a62f3217bc9ccc4a530cf3f",
+      "provenance": "Emulator-rendered regression reference for asm/video/sprites/transparent_pixel.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/tilemap/basic.bmp",
+      "bytes": 245814,
+      "sha256": "8ae94f0e5b869fbb109511be2bb8c465c232d9d92ad11bcdd02e1032c074c12a",
+      "provenance": "Emulator-rendered regression reference for asm/video/tilemap/basic.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/tilemap/mirror.bmp",
+      "bytes": 245814,
+      "sha256": "860d06ad5e3bf84333053a494f5f9d9ba0e9ee2df10cac9b6a9ec3c0bc4deae2",
+      "provenance": "Emulator-rendered regression reference for asm/video/tilemap/mirror.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/tilemap/scroll.bmp",
+      "bytes": 245814,
+      "sha256": "c1e3550fd81e42083a7b3ca5b3a9b1bd2b028591c366824e2eb839047340579c",
+      "provenance": "Emulator-rendered regression reference for asm/video/tilemap/scroll.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/tilemap/text.bmp",
+      "bytes": 245814,
+      "sha256": "bd96817794d598b593d281637eb8567dc04184be0db591b8ca563b3d794be712",
+      "provenance": "Emulator-rendered regression reference for asm/video/tilemap/text.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/tilemap/transparent.bmp",
+      "bytes": 245814,
+      "sha256": "4ced3758d37f5eb10154046f217e456a6d86a436eb0d6579d633c5e6151130cd",
+      "provenance": "Emulator-rendered regression reference for asm/video/tilemap/transparent.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/ula/border_paper.bmp",
+      "bytes": 245814,
+      "sha256": "8c33c13276d3a02b95078021c3605ac5de69a0243f53bb30770ad7dce7bbab78",
+      "provenance": "Emulator-rendered regression reference for asm/video/ula/border_paper.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/ula/scroll_x.bmp",
+      "bytes": 245814,
+      "sha256": "39c888d44c50387a82da296ba572ee9e52dab5a13d6c30f0e09b0a22e5a003f6",
+      "provenance": "Emulator-rendered regression reference for asm/video/ula/scroll_x.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/ula/timex_hicolour_nr69_alias.bmp",
+      "bytes": 245814,
+      "sha256": "6f4803a6fe3375c2efda159822d20ffffe1eea6c82c8efb704e1121cdc1e4dcc",
+      "provenance": "Emulator-rendered regression reference for asm/video/ula/timex_hicolour_nr69_alias.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/ula/timex_hicolour_port_ff.bmp",
+      "bytes": 245814,
+      "sha256": "6f4803a6fe3375c2efda159822d20ffffe1eea6c82c8efb704e1121cdc1e4dcc",
+      "provenance": "Emulator-rendered regression reference for asm/video/ula/timex_hicolour_port_ff.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/ula/ula_off.bmp",
+      "bytes": 245814,
+      "sha256": "9598e5527b87b9df56d948a9f4e0e6144914b9c3377f8c880165066f08f5ef5d",
+      "provenance": "Emulator-rendered regression reference for asm/video/ula/ula_off.asm; geometric test patterns."
+    },
+    {
+      "path": "refs/video/ula/ulanext.bmp",
+      "bytes": 245814,
+      "sha256": "119dcd1bed0154cf8106f9fa322287b83837722035b14b651ba9e79f70a20bfd",
+      "provenance": "Emulator-rendered regression reference for asm/video/ula/ulanext.asm; geometric test patterns."
+    }
+  ]
+}

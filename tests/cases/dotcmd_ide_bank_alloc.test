@@ -1,0 +1,19 @@
+# IDE_BANK alloc semantics check. nxiview alloc'd 11 consecutive 8K pages
+# (126 down to 116) then freed page 126 for 16K alignment, so the final
+# bitmask covers pages 116..125 (= 10 pages, 80 KB of L2 framebuffer).
+# The allocator hands out from the TOP of the effective RAM, capped at
+# the 1 MB default (128 pages); inspeccy mirrors that.
+
+description    = IDE_BANK hands out consecutive descending 8K pages
+dot            = data/programs/nxiview.dot
+dot_arg        = synthetic-320-pal.nxi
+vfs            = data/dotcmd
+seconds        = 2
+# Pin to a stock 1 MB Next so the top-down allocator hits page 127. Without
+# this the global default (2 MB) would start from 255 and the mask shifts.
+extra_args     = --ram-mb 1
+
+expect_exit                = 0
+expect_dump_field_eq       = vfs.stats.ide_bank_allocs=11
+expect_dump_field_eq       = vfs.stats.ide_bank_frees=1
+expect_dump_field_eq       = next.allocated_pages_8k_mask=$00000000000000000000000000000000BFF00000000000000000000000000000

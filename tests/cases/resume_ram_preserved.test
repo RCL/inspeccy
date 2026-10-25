@@ -1,0 +1,17 @@
+# RAM content survives the dump→resume cycle.
+# Phase 1: screen_pixel_write writes $FF to $4000 (in bank 5), then halts.
+# Phase 2: resumes. Final saved SNA must still have $FF at the bank-5 pixel
+# location. SNA layout (48K save): header(27) + bank5(16384) + bank2 + bank0,
+# so $4000 in memory = offset 27 in the SNA file.
+# (psg_silent's machine is 128K, screen_pixel_write is also 128K → the .out.sna
+# is 128K format, so $4000 = offset 27 of bank 5 = offset 27 in file.)
+
+description    = RAM content (one byte at $4000) survives dump+resume
+phase1_sna     = data/sna/screen_pixel_write.sna
+phase1_seconds = 0.001
+seconds        = 0.001
+
+expect_exit                = 0
+expect_status_field_eq     = vram.pixel_writes_bank5=1
+expect_status_field_eq     = vram.first_pixel_byte=$FF
+expect_output_sna_byte_at  = 27=0xFF

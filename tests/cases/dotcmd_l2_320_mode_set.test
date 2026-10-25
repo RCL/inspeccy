@@ -1,0 +1,14 @@
+# After nxiview runs, NR_L2_BANK ($12) should point at 8K page 52 / 2 = 26
+# (the lowest of the 10 in-use L2 pages), and NR_L2_CTRL ($70) should be
+# $10 = mode bits 5:4 = 01 = 320x256x256. The any_l2_touched flag must be
+# set so DetectActiveLayer picks an L2 mode.
+
+description    = nxiview sets NR_L2_BANK=26 + NR_L2_CTRL=$10 (320x256x8bpp)
+dot            = data/programs/nxiview.dot
+dot_arg        = synthetic-320-pal.nxi
+vfs            = data/dotcmd
+seconds        = 2
+
+expect_exit                = 0
+expect_dump_field_eq       = next.any_l2_touched=true
+expect_dump_field_eq       = next.last_selected_nextreg=$18

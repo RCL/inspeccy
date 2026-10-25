@@ -1,0 +1,9 @@
+# --no-dump must skip writing the dump file.
+
+description    = --no-dump suppresses dump JSON output
+sna            = data/sna/psg_silent.sna
+seconds        = 0.1
+extra_args     = --no-dump
+
+expect_exit          = 6
+expect_file_absent   = dump

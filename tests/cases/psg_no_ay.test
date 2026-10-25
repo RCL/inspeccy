@@ -1,0 +1,11 @@
+# Verify --no-ay conflicts with --psg-out (hard CLI error before any execution).
+# Reuses the psg_mask_r1.sna artifact; the actual SNA content doesn't matter
+# because inspeccy rejects the flag combo before loading.
+
+description    = --no-ay + --psg-out is a hard error (exit 4)
+sna            = data/sna/psg_mask_r1.sna
+seconds        = 0.1
+no_ay          = true
+psg_out        = auto
+
+expect_exit    = 4

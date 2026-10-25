@@ -1,0 +1,15 @@
+* text=auto
+*.sh text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.nex binary
+*.sna binary
+*.dot binary
+*.dck binary
+*.tap binary
+*.trd binary
+*.nxi binary
+*.bmp binary
+*.png binary
+*.DAT binary

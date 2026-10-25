@@ -1,0 +1,30 @@
+# --create-initial-dump skips RunUntil so the produced dump captures the
+# state just after the dot-cmd is loaded but before a single Z80 instruction
+# executes. NextRegs are still zero, no palettes have been written, only
+# the dot-cmd's own 8K page (= page 127, the top of the default 1 MB pool)
+# is allocated.
+
+description         = --create-initial-dump produces a zero-state dump with the dot-cmd loaded
+dot                 = data/programs/nxiview.dot
+dot_arg             = synthetic-320-pal.nxi
+vfs                 = data/dotcmd
+create_initial_dump = true
+# Pin to a stock 1 MB Next so code_8k_page = 127 (top of 1 MB).
+extra_args          = --ram-mb 1
+
+expect_exit                = 0
+expect_dump_field_eq       = next.is_next=true
+expect_dump_field_eq       = next.nextreg_writes=0
+expect_dump_field_eq       = next.palette_writes=0
+expect_dump_field_eq       = next.any_l2_touched=false
+expect_dump_field_eq       = next.allocated_pages_8k_mask=$0000000000000000000000000000000080000000000000000000000000000000
+expect_dump_field_eq       = dot_cmd.binary_size=1843
+expect_dump_field_eq       = dot_cmd.code_8k_page=127
+expect_dump_field_eq       = dot_cmd.arg=synthetic-320-pal.nxi
+expect_dump_field_eq       = vfs.drive=C
+expect_dump_field_eq       = vfs.stats.files_opened=0
+expect_dump_field_eq       = vfs.stats.rst08_calls=0
+expect_dump_field_eq       = cpu.PC=$2000
+expect_dump_field_eq       = cpu.SP=$FFF0
+expect_dump_field_eq       = cpu.IY=$5C3A
+expect_dump_field_eq       = cpu.HL=$5CDB

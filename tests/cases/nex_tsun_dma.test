@@ -1,0 +1,43 @@
+# TouchingTheSun runs DMA memset programs in its startup sequence
+# (screen-clear pass over 6 banks + several layer-2 / lores fills).
+# After 0.2 s the DMA controller should have processed dozens of
+# transfers totalling > 200 KB.
+
+description    = Z80N DMA: TouchingTheSun's DMA memsets execute and fill RAM banks
+nex            = data/programs/TouchingTheSun.nex
+machine        = next50
+seconds        = 0.2
+
+expect_exit                = 0
+# Concrete numbers are emulation-deterministic for this fixed budget.
+# If the demo's startup sequence changes (or DMA scheduling changes),
+# these counts need re-pinning.
+# History:
+#   35 -> 78: zxnDMA-mode length fix (was off-by-one; demo stopped
+#             self-corrupting and got further in the same 0.2 s).
+#   78 -> 67: F_READ gained an SD-card-time cost model (~5 KB ~= one
+#             50 Hz frame at 28 MHz); the initial bank-loading reads
+#             now eat wall-clock budget that previously went to DMA.
+#   67 -> 17: CTC0 re-enable via $A1 control word now actually re-arms
+#             the channel; the wav-player ISR firing ~14.5 kHz claimed
+#             cycles that previously went to DMA setup. (NOTE: this
+#             count was momentarily measured before the next change
+#             landed; without DMA cycle accounting the demo had been
+#             looping ParticleRays.Tick at ~4 kHz, so most reported
+#             "Ticks" were doing nothing — the lopsided 17 was a
+#             measurement during a transient state of the code.)
+#   17 -> 96: zxnDMA transfers now charge realistic CPU-halt cycles —
+#             4 CPU cycles per byte (2 to read port A, 2 to write port
+#             B; the per-port default after reset is 2 cycles, and
+#             zxnDMA always does both even in "memset" mode since
+#             port A = fixed address still incurs a read). The main
+#             loop's ParticleRays Tick now spends ~50 k cycles per
+#             pass on its 12 KB MemsetDma + 12 KB MemcpyDma calls.
+#   96 -> 17: TSun source-level fixes — Init now resets
+#             NumParticlesToDraw to 0 (was accumulating across cycles)
+#             and YOffset's "ramp up" decrement now scales by demo-time
+#             delta instead of decrementing once per Tick. Both push
+#             the main loop's per-Tick cost up, so fewer DMA setups
+#             fit in 0.2 s. This is the demo behaving correctly now.
+expect_dump_field_eq       = dma.transfers=17
+expect_dump_field_eq       = dma.unknown_bytes=0

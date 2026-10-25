@@ -1,0 +1,21 @@
+# nxiview's F_OPEN should resolve the relative path "synthetic-320-pal.nxi"
+# against the --vfs root, find the file, and return a handle. After the
+# full read sequence the VFS stats should show 82440 bytes read across
+# 28 RST $08 calls.
+
+description    = VFS resolves arg path + nxiview reads payload via F_READ
+dot            = data/programs/nxiview.dot
+dot_arg        = synthetic-320-pal.nxi
+vfs            = data/dotcmd
+seconds        = 2
+
+expect_exit                = 0
+expect_dump_field_eq       = vfs.stats.files_opened=1
+expect_dump_field_eq       = vfs.stats.bytes_read=82440
+expect_dump_field_eq       = vfs.stats.rst08_calls=28
+expect_dump_field_eq       = vfs.stats.rst08_unknown=0
+# F_READ now charges Z80 cycles to model SD-card transfer time
+# (~5 KB ~= one 50 Hz frame at the base 3.5 MHz clock, scaled by NR_07
+# turbo). 82440 bytes * 70000 / 5120 * 8 (= NR_07=3 -> 28 MHz) = 9016875
+# cycles charged in total across the 28 reads.
+expect_dump_field_eq       = vfs.stats.read_cycles_charged=9016875

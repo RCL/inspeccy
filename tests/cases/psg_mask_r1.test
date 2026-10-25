@@ -1,0 +1,30 @@
+# Verify (a) AY routing through the centralised WriteIoPort dispatcher and
+# (b) per-register write masking for R1 (4-bit register). The test program
+# writes $FF to R1; AyWriteMask[1] = 0x0F, so captured value must be $0F.
+#
+# After running: no PSG ticks fire (program halts after one frame's worth of
+# cycles is nowhere near 70000), so PsgCapture::Finalise emits the single
+# trailing frame directly. Resulting .psg body: 01 0F FF FD (reg, value,
+# end-of-frame, end-of-song), preceded by the 16-byte PSG header.
+
+description    = AY R1 write of $FF is captured as $0F (per-register write masking)
+sna            = data/sna/psg_mask_r1.sna
+seconds        = 0.1
+
+expect_exit              = 6
+expect_summary_contains  = result=HaltedDeliberateStop
+expect_summary_contains  = aywrites=1
+
+# PSG header bytes 0..15
+expect_psg_byte_at = 0=0x50
+expect_psg_byte_at = 1=0x53
+expect_psg_byte_at = 2=0x47
+expect_psg_byte_at = 3=0x1A
+expect_psg_byte_at = 4=0x00
+expect_psg_byte_at = 5=0x00
+
+# PSG body
+expect_psg_byte_at = 16=0x01
+expect_psg_byte_at = 17=0x0F
+expect_psg_byte_at = 18=0xFF
+expect_psg_byte_at = 19=0xFD

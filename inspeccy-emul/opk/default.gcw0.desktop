@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=inspeccy
+Comment=ZX Spectrum Next .nex player (inspeccy core)
+Exec=run.sh %f
+Terminal=false
+Type=Application
+StartupNotify=true
+Icon=inspeccy-emul
+Categories=emulators;
+X-OD-NeedsDownscaling=false
+X-OD-Filter=.nex,.NEX

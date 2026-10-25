@@ -1,0 +1,19 @@
+# Local builds, test output and firmware are never release inputs.
+/build*/
+/stage*/
+/bin/
+/roms/
+/tests/tmp/
+/inspeccy-emul/dist/
+__pycache__/
+*.py[cod]
+*.rom
+*.btr
+*.fidx
+*.sld
+*.lst
+*.obj
+*.pdb
+*.ilk
+.DS_Store
+Thumbs.db

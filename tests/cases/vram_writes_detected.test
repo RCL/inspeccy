@@ -1,0 +1,13 @@
+# A single LD ($4000), A must register as a pixel write to bank 5.
+# screen_pixel_write.sna: ld a,$FF; ld ($4000),a; di; halt
+
+description    = LD ($4000),A counts as a bank-5 pixel write
+sna            = data/sna/screen_pixel_write.sna
+seconds        = 0.1
+
+expect_exit              = 6
+expect_status_field_eq   = vram.pixel_writes_bank5=1
+expect_status_field_eq   = vram.attr_writes_bank5=0
+expect_status_field_eq   = vram.pixels_all_zero=false
+expect_status_field_eq   = vram.pixels_all_equal=false
+expect_status_field_eq   = vram.uniform_screen=false

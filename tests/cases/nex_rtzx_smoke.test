@@ -1,0 +1,27 @@
+# rtzx_main_next.nex — Radastan 128x96 raytraced intro. 3 banks present
+# (2, 14, 15), PC=$8000 (lands in bank 2), 28 MHz turbo. The 50 Hz code
+# path doesn't use CTC, but the run still exercises every other Next
+# subsystem we've modelled (NextRegs, MMU8K, IM 2 routing via NR_C0,
+# AY music, turbo rescaling, LoRes BMP output once the demo switches
+# modes around its 34s mark).
+
+description    = rtzx_main_next.nex (60s) reaches LoRes phase + emits 128x96 BMP
+nex            = data/programs/rtzx_main_next.nex
+seconds        = 60
+
+expect_exit              = 0
+expect_status_field_eq   = exit.result=BudgetReached
+expect_dump_field_eq     = nex.num_banks=3
+expect_dump_field_eq     = nex.banks_present=2, 14, 15
+expect_dump_field_eq     = nex.initial_pc=$8000
+expect_dump_field_eq     = nex.initial_sp=$7F40
+# By 60 s the demo has switched to LoRes (NR_6A bit 5) so the BMP
+# encoder picks the 128x96 8bpp path. Header bytes confirm size.
+expect_bmp_byte_at       = 18=0x80
+expect_bmp_byte_at       = 19=0x00
+expect_bmp_byte_at       = 22=0x60
+expect_bmp_byte_at       = 23=0x00
+expect_bmp_byte_at       = 28=0x08
+# Frame ints fire at ~50 Hz wall-clock → at least 2500 in 60 s.
+expect_summary_matches   = ints=[23]\d{3}
+extra_args                 = --bmp-per-layer

@@ -1,0 +1,12 @@
+# nxiview with NO --dot-arg gets HL=$0000 (null pointer per NextZXOS
+# convention). ParseArg returns CF=1 ("usage"), and the error path again
+# RETs through a zeroed stack → reset trap.
+
+description    = nxiview with no arg follows usage-error path to reset trap
+dot            = data/programs/nxiview.dot
+vfs            = data/dotcmd
+seconds        = 1
+
+expect_exit                = 5
+expect_status_field_eq     = exit.result=RestartTrap
+expect_dump_field_eq       = vfs.stats.files_opened=0

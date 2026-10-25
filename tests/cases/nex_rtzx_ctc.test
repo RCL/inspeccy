@@ -1,0 +1,19 @@
+# rtzx_main_next.nex in 60 Hz mode programs CTC channel 0 at ~800 Hz to
+# pace music updates independently of the display refresh. The demo's 60Hz
+# branch (NR_05 bit 2 = 1) sets control word $A5, time constant 136 — at
+# 28 MHz turbo with 256 prescaler that's 28e6 / 256 / 136 ≈ 803.6 Hz.
+# This test pins both the CTC programming and the actual interrupt rate.
+
+description    = rtzx_main_next.nex --machine next60: CTC0 fires at ~800 Hz
+nex            = data/programs/rtzx_main_next.nex
+machine        = next60
+seconds        = 5
+
+expect_exit                = 0
+expect_status_field_eq     = exit.result=BudgetReached
+expect_dump_field_eq       = ctc.channel_0.enabled=true
+expect_dump_field_eq       = ctc.channel_0.control_word=$A5
+expect_dump_field_eq       = ctc.channel_0.time_constant=136
+expect_dump_field_eq       = ctc.channel_0.period_cycles=34816
+# 800 Hz * 5 s = ~4000 ints; tolerate +/- a few from boot lag + coalescing.
+expect_summary_matches     = ints=4[0-9]{3}

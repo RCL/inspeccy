@@ -1,0 +1,20 @@
+# Post-run dump after nxiview finishes loading and configuring L2. Verifies
+# the NextReg writes landed (palette, L2 bank, L2 mode), the VFS counters
+# moved, and the IDE_BANK pool reached the expected occupancy (11 pages).
+
+description    = post-run dump records nxiview's NextReg + L2 + VFS state
+dot            = data/programs/nxiview.dot
+dot_arg        = synthetic-320-pal.nxi
+vfs            = data/dotcmd
+seconds        = 2
+# Pin to 1 MB so nxiview's allocation lands at the same pages it does on
+# the stock-Next configuration this test was written against.
+extra_args     = --ram-mb 1
+
+expect_exit                = 0
+expect_dump_field_eq       = next.is_next=true
+expect_dump_field_eq       = next.any_l2_touched=true
+expect_dump_field_eq       = next.allocated_pages_8k_mask=$00000000000000000000000000000000BFF00000000000000000000000000000
+expect_dump_field_eq       = vfs.stats.files_opened=1
+expect_dump_field_eq       = vfs.stats.ide_bank_allocs=11
+expect_dump_field_eq       = vfs.stats.ide_bank_frees=1

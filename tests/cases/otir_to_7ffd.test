@@ -1,0 +1,15 @@
+# Validates that block I/O (OUTI in particular) actually routes through the
+# centralised port dispatcher and reaches MemoryBus::WritePort7FFD. Before PR A2,
+# OUTI silently discarded the value, so the 7FFD byte stayed at the initial $00.
+# After PR A2, the OUTI writes $11 to $7FFD; saved SNA reflects this.
+#
+# See tests/data/build_otir_to_7ffd.ps1 for the program details.
+# Trailer 7FFD byte is at file offset 49181 (= 27 + 3*16384 + 2).
+
+description    = OUTI to $7FFD reaches the 128K paging port (block I/O activation regression)
+sna            = data/sna/otir_to_7ffd.sna
+seconds        = 0.1
+
+expect_exit              = 6
+expect_summary_contains  = result=HaltedDeliberateStop
+expect_output_sna_byte_at = 49181=0x11

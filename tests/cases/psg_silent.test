@@ -1,0 +1,19 @@
+# Verify minimal .psg output when there are zero AY writes.
+# The program is just DI; HALT, so no PSG frame ticks fire (program exits in
+# ~10 cycles, well before the 70000-cycle PSG tick period at --mhz 3.5).
+# PsgCapture::Finalise has no DirtyMask, no silent frames → just appends 0xFD.
+# Result: 16-byte header + 0xFD = 17 bytes total.
+
+description    = .psg output is minimal (header + 0xFD) when no AY activity
+sna            = data/sna/psg_silent.sna
+seconds        = 0.1
+
+expect_exit              = 6
+expect_summary_contains  = result=HaltedDeliberateStop
+expect_summary_contains  = aywrites=0
+expect_summary_contains  = psgframes=0
+
+expect_psg_byte_at = 0=0x50
+expect_psg_byte_at = 1=0x53
+expect_psg_byte_at = 2=0x47
+expect_psg_byte_at = 16=0xFD

@@ -1,0 +1,16 @@
+# Regression: a corrupt stack pops $0000, RET at $8004 transfers to ROM start.
+# Expected resolution: inspeccy's RestartTrap fires; exit code 5.
+#
+# Interrupts off so the ROM's IM 1 handler doesn't accidentally redirect
+# the program away from the RET-to-$0000 path the test is pinned to.
+
+description    = synthetic SNA returns via RET to $0000, triggering RestartTrap
+sna            = data/sna/restart_into_rom.sna
+seconds        = 5
+no_interrupts  = true
+
+expect_exit              = 5
+expect_summary_contains  = result=RestartTrap
+expect_summary_contains  = lastPC=$8004
+expect_summary_contains  = lastOp=$C9
+expect_trace_contains    = RESET_TRAP

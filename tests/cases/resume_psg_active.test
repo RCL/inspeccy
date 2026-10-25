@@ -1,0 +1,23 @@
+# PSG capture survives the dump→resume cycle.
+# Phase 1: psg_mask_r1 writes $FF to AY R1, halts. Phase 1 must enable --psg-out
+# so the dump's psg section captures in-progress state. Phase 2 resumes; the
+# resumed PsgCapture has the same DirtyMask + FrameValues, Finalise emits the
+# expected body.
+
+description    = PSG capture state survives dump+resume
+phase1_sna         = data/sna/psg_mask_r1.sna
+phase1_seconds     = 0.001
+phase1_extra_args  = --psg-out tests/tmp/resume_psg_active.phase1.psg
+seconds            = 0.001
+
+expect_exit              = 0
+expect_status_field_eq   = ay.writes=1
+expect_status_field_eq   = ay.registers_touched=$0002
+expect_dump_field_eq     = ay.registers.1=$0F
+
+# After resume + finalise, the .psg file content should be the same shape as
+# the straight-run psg_mask_r1 test (header + 01 0F FF FD).
+expect_psg_byte_at = 16=0x01
+expect_psg_byte_at = 17=0x0F
+expect_psg_byte_at = 18=0xFF
+expect_psg_byte_at = 19=0xFD

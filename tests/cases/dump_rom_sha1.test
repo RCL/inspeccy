@@ -1,0 +1,14 @@
+# Verify that the SHA1 of each loaded ROM file is recorded in the dump
+# (so dumps are attributable to the exact ROM edition used), and that
+# unused external refs stay null.
+
+description    = dump records SHA1 of the loaded ROM file
+sna            = data/sna/psg_silent.sna
+seconds        = 0.001
+
+expect_exit             = 6
+expect_dump_field_ne    = external_refs.rom48.sha1=null
+expect_dump_field_ne    = external_refs.rom128.sha1=null
+expect_dump_field_eq    = external_refs.tap.sha1=null
+expect_dump_field_eq    = external_refs.trd.sha1=null
+expect_dump_field_eq    = external_refs.input_script.sha1=null

@@ -1,0 +1,13 @@
+# The Next inserts one wait state on every memory read at 28 MHz (zxnext.vhd,
+# sram_wait_n): opcode fetch, operand, data, stack. Writes and I/O are free.
+# The dot command (data/dotcmd/next28_readwait.asm) selects 28 MHz, runs a
+# 10000-iteration loop of 7 reads and no writes (33 T nominal, 40 T with the
+# waits) and exits: 330087 T nominal + 70009 reads = 400096.
+
+description    = next28_readwait: one wait state per memory read at 28 MHz
+dot            = data/dotcmd/next28_readwait.dot
+seconds        = 2
+
+expect_exit              = 5
+expect_summary_matches   = cycles=400096\b
+expect_status_field_eq   = exit.result=RestartTrap

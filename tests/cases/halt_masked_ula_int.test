@@ -1,0 +1,25 @@
+# Regression: the HALT fast-forward must never wedge on a stuck deadline.
+# halt_masked_ula_int.nex MASKS the ULA frame interrupt (NR $22 bit 2) while
+# ARMING the line interrupt (NR $22 bit 1 + NR $23), then `ei : halt`s. The CPU
+# halts waiting on the line int (a future wake source) while the masked ULA
+# frame-int deadline sits at the current cycle. Before the fix, the fast-forward
+# snapped to that stuck deadline (Skipped=0) and spun forever — no --cycles
+# budget could bound it, since emulated time never advanced. The fixture keeps the line interrupt active while masking the ULA interrupt.
+#
+# The fix: (1) a masked ULA frame int still advances its deadline every frame
+# (the ULA pulses regardless of whether the CPU takes it), and (2) the HALT
+# fast-forward only snaps to strictly-future deadlines. Either layer alone breaks
+# the wedge; together the run reaches its frame budget.
+#
+# timeout_s makes a REGRESSION fail (subprocess killed) instead of hanging the
+# whole suite. Source: data/nex/src/halt_masked_ula_int.asm.
+
+description    = HALT fast-forward does not livelock on a masked ULA-int deadline
+nex            = data/nex/halt_masked_ula_int.nex
+machine        = next50
+cycles         = 2000000
+no_ay          = true
+timeout_s      = 30
+
+expect_exit              = 0
+expect_status_field_eq   = exit.result=BudgetReached

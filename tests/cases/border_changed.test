@@ -1,0 +1,9 @@
+# OUT ($FE), 2 should set the border to red. The ULA arm in WriteIoPort tracks
+# the colour bits regardless of other bits.
+
+description    = OUT ($FE), 2 sets border to red (colour 2)
+sna            = data/sna/border_red.sna
+seconds        = 0.1
+
+expect_exit              = 6
+expect_status_field_eq   = vram.border_colour=2

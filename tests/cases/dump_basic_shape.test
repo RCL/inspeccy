@@ -1,0 +1,21 @@
+# Locks in the dump JSON's top-level shape for a deterministic minimal SNA.
+# Reuses psg_silent.sna (DI;HALT) — known small RAM footprint, no inputs, no FDC.
+
+description    = dump JSON has correct top-level shape for a deterministic DI;HALT run
+sna            = data/sna/psg_silent.sna
+seconds        = 0.1
+
+expect_exit             = 6
+expect_dump_field_eq    = dump_version=1
+expect_dump_field_eq    = machine=spectrum128k
+expect_dump_field_eq    = cpu.PC=$8002
+expect_dump_field_eq    = cpu.halted=true
+expect_dump_field_eq    = cpu.IFF1=0
+expect_dump_field_eq    = cpu.IM=1
+expect_dump_field_eq    = memory.border_colour=7
+expect_dump_field_eq    = memory.port_7ffd=$00
+expect_dump_field_eq    = ay.writes_observed=0
+expect_dump_field_eq    = ay.registers_touched=$0000
+expect_dump_field_eq    = tape=null
+expect_dump_field_eq    = trdos=null
+expect_dump_field_eq    = input=null

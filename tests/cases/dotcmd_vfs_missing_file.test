@@ -1,0 +1,13 @@
+# When --dot-arg names a file that doesn't exist in the VFS, F_OPEN must
+# return CF=1 + A=VFS_ERR_NO_FILE. nxiview's error path then exits via the
+# "exit-to-BASIC" RET that pops $0000 → reset trap (exit code 5).
+
+description    = F_OPEN on a missing file triggers nxiview's error exit path
+dot            = data/programs/nxiview.dot
+dot_arg        = does-not-exist.nxi
+vfs            = data/dotcmd
+seconds        = 1
+
+expect_exit                = 5
+expect_status_field_eq     = exit.result=RestartTrap
+expect_dump_field_eq       = vfs.stats.files_opened=0

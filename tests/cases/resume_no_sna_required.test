@@ -1,0 +1,18 @@
+# Phase 2 uses --resume without --sna. Verifies the workflow.
+# psg_silent.sna halts immediately. Phase 1 captures a halted state.
+# Phase 2 resumes — top-of-loop bHalted block fires, classifies as
+# HaltedInterruptsDisabled (resume can't preserve the deliberate-stop bit;
+# documented behaviour).
+
+description    = --resume works as the sole source (no --sna)
+phase1_sna     = data/sna/psg_silent.sna
+phase1_seconds = 0.001
+seconds        = 0.001
+
+# Phase 1 halts at cycle 8 (DI;HALT). Dump captures bHalted=true, IFF1=0,
+# NextFrameIntCycle ~ 70908. Phase 2 resumes; HALT fast-forward snaps to
+# NextFrameIntCycle and the budget (3500+0.001*3.5M = ~7008) is exceeded by
+# the snap, so phase 2 exits BudgetReached. The resume mechanism worked — the
+# dump+restore round-trip is what's being validated, not the exit code per se.
+expect_exit              = 0
+expect_status_field_eq   = exit.result=BudgetReached

@@ -1,0 +1,14 @@
+# nxiview writes NR_PALETTE_CTRL=$10 (= bits 6:4 = 001 = L2 first palette)
+# then 256 9-bit palette entries via NR_PAL_VALUE_9B. Verify the writes
+# landed in palette index 1 (L2-first) and the count matches the 256
+# entries the file carries.
+
+description    = palette writes routed to L2-first slot (bits 6:4 of NR_PALETTE_CTRL)
+dot            = data/programs/nxiview.dot
+dot_arg        = synthetic-320-pal.nxi
+vfs            = data/dotcmd
+seconds        = 2
+
+expect_exit                = 0
+expect_dump_field_eq       = next.palette_writes=256
+expect_dump_field_eq       = next.any_l2_touched=true

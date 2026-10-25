@@ -1,0 +1,19 @@
+# --vfs-readonly write lock. The same self-checking esxdos_rw.nex, but the
+# mount is write-locked: its very first F_OPEN (creat/trunc/write) must fail
+# with A=READ_ONLY, so the program jumps straight to its halt without opening
+# or writing anything. Proves the guard covers the create/write path before it
+# touches the host filesystem (bytes_written=0, files_opened=0, and the scratch
+# dir stays empty). Source: data/nex/src/esxdos_rw.asm.
+
+description    = --vfs-readonly refuses guest writes (F_OPEN creat/write -> READ_ONLY)
+nex            = data/nex/esxdos_rw.nex
+machine        = next50
+vfs_scratch    = esxdos_ro.vfs
+cycles         = 3000000
+no_ay          = true
+extra_args     = --vfs-readonly
+
+expect_exit              = 6
+expect_status_field_eq   = exit.result=HaltedDeliberateStop
+expect_dump_field_eq     = vfs.stats.files_opened=0
+expect_dump_field_eq     = vfs.stats.bytes_written=0

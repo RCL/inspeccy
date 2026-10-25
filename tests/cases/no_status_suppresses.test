@@ -1,0 +1,9 @@
+# --no-status must skip writing the status JSON file.
+
+description    = --no-status suppresses status JSON output
+sna            = data/sna/psg_silent.sna
+seconds        = 0.1
+extra_args     = --no-status
+
+expect_exit          = 6
+expect_file_absent   = status

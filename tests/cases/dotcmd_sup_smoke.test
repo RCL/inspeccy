@@ -1,0 +1,25 @@
+# Red Supremacy 4 KB: 28 MHz turbo + IM 2 + AY music + LoRes 128x96 4bpp
+# display via NR_6A=$20. Its kickstart starts with `rst $20` (close DivMMC
+# paging, jump to HL) so this is also the canary for the RST $20 trap.
+
+description    = sup.dot: RST $20 trap + LoRes display + IM 2 vector + AY music
+dot            = data/programs/sup.dot
+seconds        = 2
+
+expect_exit              = 0
+expect_status_field_eq   = exit.result=BudgetReached
+expect_summary_matches   = ints=\d{2,}
+expect_summary_matches   = aywrites=[1-9]\d+
+# LoRes encoder picks 128x96 = headers + 256-entry palette + 128*96 pixels
+# = 14 + 40 + 1024 + 12288 = 13366 bytes. Tighter than --bmp-out check.
+expect_bmp_byte_at       = 18=0x80
+expect_bmp_byte_at       = 19=0x00
+expect_bmp_byte_at       = 22=0x60
+expect_bmp_byte_at       = 23=0x00
+expect_bmp_byte_at       = 28=0x08
+# NR_07 (TURBO_CONTROL) write must have rescaled FrameIntPeriod to 28 MHz
+# (= 69888 base * 8). Anchors that the turbo callback fired and the
+# scheduler honoured it; if NR_07 routing breaks this number is back to
+# 69888 and the assertion fails loudly.
+expect_status_field_eq   = interrupts.frame_int_period=559104
+extra_args                 = --bmp-per-layer

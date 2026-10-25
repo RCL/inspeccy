@@ -1,0 +1,16 @@
+# Locks in the JSON status file's shape for a deterministic minimal SNA.
+# Reuses psg_silent.sna (DI;HALT).
+
+description    = status JSON has correct shape for a deterministic DI;HALT run
+sna            = data/sna/psg_silent.sna
+seconds        = 0.1
+
+expect_exit              = 6
+expect_status_field_eq   = version=1
+expect_status_field_eq   = exit.result=HaltedDeliberateStop
+expect_status_field_eq   = exit.exit_code=6
+expect_status_field_eq   = exit.di_to_halt_cycles=8
+expect_status_field_eq   = ay.writes=0
+expect_status_field_eq   = vram.uniform_screen=true
+expect_status_field_eq   = vram.pixels_all_zero=true
+expect_status_field_eq   = vram.border_colour=7

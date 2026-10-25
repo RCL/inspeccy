@@ -1,0 +1,19 @@
+{
+  "name": "inspeccy-skills",
+  "version": "1.0.0",
+  "author": {
+    "name": "Inspeccy contributors"
+  },
+  "description": "Inspeccy experiments, sjasmplus bank analysis and Spectrum Next graphics diagnostics.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Inspeccy Skills",
+    "shortDescription": "Debug Spectrum programs with Inspeccy.",
+    "longDescription": "Shared workflows for compact emulator experiments, assembly layout and bank contracts, and Spectrum Next graphics diagnostics.",
+    "developerName": "Inspeccy contributors",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "defaultPrompt": "Investigate this Spectrum program using compact Inspeccy experiments and bound assembly symbols."
+  },
+  "requires_local_executor": true
+}

@@ -1,0 +1,24 @@
+# esxDOS write path + directory APIs (lane E). esxdos_rw.nex self-checks the
+# whole surface against a writable scratch mount: F_OPEN(creat/trunc/write),
+# F_WRITE, F_SYNC, F_CLOSE, then F_OPEN(read) + F_READ and byte-compares the
+# read-back, then F_OPENDIR/F_READDIR over the mount (which now contains the
+# file it just wrote). Only on full success does it write a 4-byte "pass.ok"
+# marker and halt, so bytes_written=12 / files_opened=3 / dir_opens=1 are
+# reachable ONLY when every checked call returned success. rst08_unknown=0
+# proves inspeccy implemented every API the program used.
+# Source: data/nex/src/esxdos_rw.{asm}.
+
+description    = esxDOS write + directory roundtrip (F_WRITE/F_SYNC/F_OPENDIR/F_READDIR)
+nex            = data/nex/esxdos_rw.nex
+machine        = next50
+vfs_scratch    = esxdos_rw.vfs
+cycles         = 3000000
+no_ay          = true
+
+expect_exit              = 6
+expect_status_field_eq   = exit.result=HaltedDeliberateStop
+expect_dump_field_eq     = vfs.stats.files_opened=3
+expect_dump_field_eq     = vfs.stats.bytes_read=8
+expect_dump_field_eq     = vfs.stats.bytes_written=12
+expect_dump_field_eq     = vfs.stats.dir_opens=1
+expect_dump_field_eq     = vfs.stats.rst08_unknown=0

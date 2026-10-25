@@ -1,0 +1,13 @@
+# Sanity: nxiview loads, opens the NXI via VFS, allocates IDE banks, and
+# reaches its WaitKey loop. Smallest assertion surface so this test traps
+# regressions in the dot-cmd plumbing without being noisy about details.
+
+description    = nxiview launches, opens file via VFS, sets up L2 layer
+dot            = data/programs/nxiview.dot
+dot_arg        = synthetic-320-pal.nxi
+vfs            = data/dotcmd
+seconds        = 2
+
+expect_exit                = 0
+expect_status_field_eq     = exit.result=BudgetReached
+expect_summary_contains    = ints=

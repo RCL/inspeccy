@@ -1,0 +1,11 @@
+# Same dot command as next28_readwait_on with --contention off: the 28 MHz
+# read wait state goes with it and the loop costs its nominal 33 T.
+
+description    = next28_readwait: --contention off removes the 28 MHz read wait
+dot            = data/dotcmd/next28_readwait.dot
+seconds        = 2
+extra_args     = --contention off
+
+expect_exit              = 5
+expect_summary_matches   = cycles=330087\b
+expect_status_field_eq   = exit.result=RestartTrap

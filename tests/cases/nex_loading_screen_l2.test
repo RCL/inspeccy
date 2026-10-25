@@ -1,0 +1,23 @@
+# NEX Layer 2 loading screen (lane F). loading_screen_l2.nex carries a 256x192
+# indexed L2 loading picture (diagonal stripes + a white top-left marker) plus
+# a palette; its program is `di : jr $`, so Layer 2 is never touched and the
+# loader-applied screen persists for the whole run. Verifies (a) the header is
+# parsed as an L2 loading screen, (b) the loader actually blitted + enabled it
+# (loading_screen_applied), and (c) the composite pixels match the golden — the
+# asymmetric white marker catches any mirror/rotate/row-flip regression in the
+# L2 blit or compositor. Source: data/nex/src/loading_screen_l2.{asm,bmp}.
+
+description    = NEX L2 loading screen: header parsed, blitted, enabled, pixels match golden
+nex            = data/nex/loading_screen_l2.nex
+machine        = next50
+seconds        = 1
+no_ay          = true
+
+expect_exit              = 0
+expect_status_field_eq   = exit.result=BudgetReached
+expect_dump_field_eq     = nex.version=V1.2
+expect_dump_field_eq     = nex.screen_flags=$01
+expect_dump_field_eq     = nex.initial_pc=$6000
+expect_dump_field_eq     = nex.has_loading_screen=true
+expect_dump_field_eq     = nex.loading_screen_applied=true
+expect_bmp_equals        = refs/nex/loading_screen_l2.bmp

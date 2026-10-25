@@ -1,0 +1,36 @@
+# Regression: --dck puts a Timex cartridge in the DOCK bank and the 2068 Home
+# ROM auto-starts it.
+#
+# lros_smoke.dck holds two DOCK chunks: chunk 0 is an LROS, chunk 1 is a single
+# marker byte $5A. The LROS pages chunk 1 in over $2000, reads the marker, pages
+# it back out and floods the bitmap with it on a white-on-black screen.
+#
+# So a pass means all of this worked:
+#   * the .dck parsed and both chunks reached the dock;
+#   * the Home ROM found the LROS header and handed control over. That only
+#     happens if the header's chunk-specification byte is read as the COMPLEMENT
+#     of the wanted HSR value -- the handover does `ld a,c / cpl / out ($F4),a`,
+#     so this cartridge stores $FE to ask for chunk 0. A spec of $01 instead
+#     leaves the Home ROM mapped at $0000 and the machine resets in a loop;
+#   * code fetched and ran from cartridge ROM;
+#   * HSR paging reached a second dock chunk.
+#
+# The bitmap assertion is what makes the last point real: an unpopulated dock
+# reads as open bus, so a broken paging path fills with $FF and every screen
+# byte becomes $77 instead of $07. Offsets are 4bpp composite pixels, two per
+# byte -- $07 is "paper, ink", which is $5A's top two bits.
+#
+# Source: data/dck/src/lros_smoke.asm, built by data/dck/src/make_lros_smoke.py.
+
+description    = --dck: 2068 Home ROM auto-starts an LROS and it can page the dock
+dck            = data/dck/lros_smoke.dck
+machine        = ts2068
+rom48_name     = tc2068-0.rom
+cycles         = 14000000
+timeout_s      = 60
+
+expect_exit                = 0
+expect_status_field_eq     = exit.result=BudgetReached
+expect_bmp_byte_at         = 0xA4DE=0x07
+expect_bmp_byte_at         = 0x62DE=0x07
+expect_bmp_byte_at         = 0x631E=0x07

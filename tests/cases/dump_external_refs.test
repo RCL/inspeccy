@@ -1,0 +1,13 @@
+# External-file paths are captured in external_refs. Even tests without --tap
+# or --input should have the ROM paths populated.
+
+description    = external_refs records ROM paths
+sna            = data/sna/psg_silent.sna
+seconds        = 0.1
+
+expect_exit             = 6
+# ROM paths are set in the runner via --rom48 / --rom128 (using the configured ROM directory
+# for both). We only check the path was recorded, not its value (varies by env).
+expect_dump_field_eq    = external_refs.tap.path=null
+expect_dump_field_eq    = external_refs.trd.path=null
+expect_dump_field_eq    = external_refs.input_script.path=null

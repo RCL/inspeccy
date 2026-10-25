@@ -1,0 +1,20 @@
+# --bmp-out auto-dispatches to the L2 encoder when DetectActiveLayer
+# reports an L2 mode. Verifies the BMP header is the 320x256 8bpp variant
+# (= 82998 bytes) and NOT the 352x288 4bpp ULA snapshot (= 50806 bytes).
+
+description    = --bmp-out picks the L2 encoder when L2 is the visible layer
+dot            = data/programs/nxiview.dot
+dot_arg        = synthetic-320-pal.nxi
+vfs            = data/dotcmd
+seconds        = 2
+
+expect_exit                = 0
+# BITMAPINFOHEADER width @ offset 18 = 320 little-endian = 40 01 00 00
+expect_bmp_byte_at         = 18=0x40
+expect_bmp_byte_at         = 19=0x01
+# height @ offset 22 = 256 LE = 00 01 00 00
+expect_bmp_byte_at         = 22=0x00
+expect_bmp_byte_at         = 23=0x01
+# bits-per-pixel @ offset 28 = 8 (vs 4 for ULA BMP)
+expect_bmp_byte_at         = 28=0x08
+extra_args                 = --bmp-per-layer

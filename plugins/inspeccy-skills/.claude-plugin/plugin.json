@@ -1,0 +1,7 @@
+{
+  "name": "inspeccy-skills",
+  "version": "1.0.0",
+  "author": {"name": "Inspeccy contributors"},
+  "description": "Inspeccy experiments, sjasmplus bank analysis and Spectrum Next graphics diagnostics.",
+  "skills": "./skills/"
+}

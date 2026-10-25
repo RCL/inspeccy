@@ -1,0 +1,11 @@
+# Tight NOP loop — every cycle is executing, none halted. cpu_busy_pct = 100.
+# nop_loop.sna: nop; jr -3 (loops forever).
+
+description    = NOP loop registers as 100% CPU busy
+sna            = data/sna/nop_loop.sna
+seconds        = 0.2
+
+expect_exit              = 0
+expect_status_field_eq   = exit.result=BudgetReached
+expect_status_field_eq   = cycles.halt=0
+expect_status_field_eq   = cycles.cpu_busy_pct=100.00

@@ -1,0 +1,15 @@
+# Minimal load test: snownononext.nex (1 bank, PC=$8000, SP=$7F40 per its
+# SAVENEX header). Verifies the NEX loader places the bank correctly, sets
+# CPU registers from the header, and lets the program run for 2 s without
+# crashing.
+
+description    = snownononext.nex loader smoke: header parsed, bank placed, demo runs
+nex            = data/programs/snownononext.nex
+seconds        = 2
+
+expect_exit              = 0
+expect_status_field_eq   = exit.result=BudgetReached
+expect_dump_field_eq     = nex.version=V1.2
+expect_dump_field_eq     = nex.num_banks=1
+expect_dump_field_eq     = nex.initial_pc=$2000
+expect_dump_field_eq     = nex.banks_present=7
